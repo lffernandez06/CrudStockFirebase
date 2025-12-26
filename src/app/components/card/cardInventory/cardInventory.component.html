@@ -1,6 +1,6 @@
-<div class="relative flex flex-col text-gray-700 bg-white
-            shadow-md rounded-xl w-60">
-
+<div
+  class="relative flex flex-col text-gray-700 bg-white shadow-md rounded-xl w-60"
+>
   <div class="relative mx-4 mt-4 overflow-hidden rounded-xl h-50">
     <img
       src="https://images.unsplash.com/photo-1629367494173-c78a56567877"
@@ -15,45 +15,34 @@
         {{ name() }}
       </p>
       <p class="font-medium text-blue-gray-900">
-        {{price()}}
+        {{ price() }}
       </p>
       <p class="font-medium text-blue-gray-900">
-        {{quantity()}}
+        {{ quantity() }}
       </p>
     </div>
 
     <p class="text-sm text-gray-700 opacity-75">
-      {{description()}}
+      {{ description() }}
     </p>
   </div>
 
   <div class="col">
     <div class="p-6 pt-0">
-
-
-
-
-        <div class="flex gap-4">
-          <button
-                (click)="showPageEditTrue(); emitProduct()"
-              class="w-full text-xs font-bold uppercase py-3 px-6 rounded-lg
-                    bg-blue-gray-900/10 text-blue-gray-900 hover:scale-105 transition
-                    cursor-pointer
-                    ">
-              Edit
-            </button>
-          <button
-              (click)="deledCard()"
-            class="w-full text-xs font-bold uppercase py-3 px-6 rounded-lg
-                  bg-blue-gray-900/10 text-blue-gray-900 hover:scale-105 transition
-                  cursor-pointer
-                  ">
-            Deleted
-          </button>
-        </div>
+      <div class="flex gap-4">
+        <button
+          (click)="showPageEditTrue(); emitProduct()"
+          class="w-full text-xs font-bold uppercase py-3 px-6 rounded-lg bg-blue-gray-900/10 text-blue-gray-900 hover:scale-105 transition cursor-pointer"
+        >
+          Edit
+        </button>
+        <button
+          (click)="deledCard()"
+          class="w-full text-xs font-bold uppercase py-3 px-6 rounded-lg bg-blue-gray-900/10 text-blue-gray-900 hover:scale-105 transition cursor-pointer"
+        >
+          Deleted
+        </button>
+      </div>
+    </div>
   </div>
-
-  </div>
-
-
 </div>
