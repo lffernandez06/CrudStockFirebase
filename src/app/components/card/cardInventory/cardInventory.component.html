@@ -1,7 +1,7 @@
 <div
-  class="relative flex flex-col text-gray-700 bg-white shadow-md rounded-xl w-60"
+  class="relative flex flex-col text-gray-700 bg-white shadow-md rounded-xl w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-sm"
 >
-  <div class="relative mx-4 mt-4 overflow-hidden rounded-xl h-50">
+  <div class="relative mx-4 mt-4 overflow-hidden rounded-xl h-48 sm:h-50 md:h-56 lg:h-60">
     <img
       src="https://images.unsplash.com/photo-1629367494173-c78a56567877"
       alt="card-image"
@@ -9,36 +9,36 @@
     />
   </div>
 
-  <div class="p-6">
-    <div class="flex items-center justify-between mb-2">
-      <p class="font-medium text-blue-gray-900">
+  <div class="p-4 sm:p-6">
+    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-2 gap-1 sm:gap-2">
+      <p class="font-medium text-blue-gray-900 text-sm sm:text-base">
         {{ name() }}
       </p>
-      <p class="font-medium text-blue-gray-900">
+      <p class="font-medium text-blue-gray-900 text-sm sm:text-base">
         {{ price() }}
       </p>
-      <p class="font-medium text-blue-gray-900">
+      <p class="font-medium text-blue-gray-900 text-sm sm:text-base">
         {{ quantity() }}
       </p>
     </div>
 
-    <p class="text-sm text-gray-700 opacity-75">
+    <p class="text-xs sm:text-sm text-gray-700 opacity-75 break-words">
       {{ description() }}
     </p>
   </div>
 
   <div class="col">
-    <div class="p-6 pt-0">
-      <div class="flex gap-4">
+    <div class="p-4 sm:p-6 pt-0">
+      <div class="flex flex-col sm:flex-row gap-2 sm:gap-4">
         <button
           (click)="showPageEditTrue(); emitProduct()"
-          class="w-full text-xs font-bold uppercase py-3 px-6 rounded-lg bg-blue-gray-900/10 text-blue-gray-900 hover:scale-105 transition cursor-pointer"
+          class="w-full sm:w-1/2 text-xs sm:text-sm font-bold uppercase py-2 sm:py-3 px-4 sm:px-6 rounded-lg bg-blue-gray-900/10 text-blue-gray-900 hover:scale-105 transition cursor-pointer"
         >
           Edit
         </button>
         <button
           (click)="deledCard()"
-          class="w-full text-xs font-bold uppercase py-3 px-6 rounded-lg bg-blue-gray-900/10 text-blue-gray-900 hover:scale-105 transition cursor-pointer"
+          class="w-full sm:w-1/2 text-xs sm:text-sm font-bold uppercase py-2 sm:py-3 px-4 sm:px-6 rounded-lg bg-blue-gray-900/10 text-blue-gray-900 hover:scale-105 transition cursor-pointer"
         >
           Deleted
         </button>
