@@ -1,0 +1,39 @@
+<div class="w-full h-dvh flex overflow-hidden">
+  <!-- Sidebar -->
+  <app-side-bar
+    class="shrink-0 relative"
+    (newProduct)="addNewProduct($event)"
+  />
+
+  <!-- Grid -->
+  <div class="flex-1 overflow-auto">
+    <div
+      class="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+    >
+      @for (item of cardList(); track $index) {
+
+      <app-card-inventory
+        (product)="showProduct(item)"
+        [price]="item.price"
+        [description]="item.description"
+        [quantity]="item.quantity"
+        [image]="item.image"
+        [id]="item.id"
+        [name]="item.name"
+        (deletedProduct)="deletedProductFromDoc($event)"
+        (showEditTrue)="showPageEditTrue($event)"
+      />
+      <!-- (onDelete)="deletedCard($event)" -->
+
+      }
+    </div>
+  </div>
+  @if ( showPage()) {
+
+  <div class="fixed inset-0">
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+      <app-edit-page (showPage)="showPageEdit($event)" />
+    </div>
+  </div>
+  }
+</div>

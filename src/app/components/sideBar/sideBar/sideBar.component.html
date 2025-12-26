@@ -1,0 +1,59 @@
+<div class="bg-amber-50 w-80 h-dvh shrink-0
+            flex flex-col items-center">
+
+   <h2 class="text-2xl my-5 font-bold text-gray-900 mb-6 text-center">Add Product</h2>
+
+  <form class="flex flex-col gap-4 w-full px-4">
+
+    <input
+      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
+      type="text"
+      placeholder="Product's Name"
+      [value]="name()"
+      (input)="name.set(txtName.value)"
+      #txtName
+    />
+
+    <input
+      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
+      type="number"
+      placeholder="Quantity"
+      [value]="quantity()"
+      (input)="quantity.set(+txtQuantity.value)"
+      #txtQuantity
+    />
+
+    <input
+      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
+      type="number"
+      placeholder="Price"
+      [value]="price()"
+      (input)="price.set(+txtPrice.value)"
+      #txtPrice
+    />
+
+    <input
+      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
+      type="text"
+      placeholder="Image"
+      [value]="image()"
+      (input)="image.set(txtImage.value)"
+      #txtImage
+    />
+
+    <input class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
+      placeholder="Description"
+      [value]="description()"
+      (input)="description.set(txtDescription.value)"
+      #txtDescription
+
+      />
+
+
+
+  </form>
+
+  <button (click)="addCard()" style="width: calc(100% - 20px)" class="m-4 bg-indigo-600 hover:bg-indigo-700 text-white font-medium p-2.5 rounded-lg transition-colors">
+    Add
+  </button>
+</div>
