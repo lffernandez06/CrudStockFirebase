@@ -44,6 +44,7 @@ export class EditPage {
   product = input<Product>()
   id = signal<number>(0);
 
+
   // newProductEdit = signal<Product>({
   //   name: this.name(),
   //   quantity: this.quantity(),
@@ -79,5 +80,7 @@ productEdit() {
      this.productService.editProduct(this.id()!.toString(), updatedProduct)
     .then(() => console.log('Producto actualizado'))
     .catch(err => console.error(err));
+    this.showPage.emit(false)
+
 }
 }
