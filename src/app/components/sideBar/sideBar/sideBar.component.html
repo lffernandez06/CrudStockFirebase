@@ -6,49 +6,69 @@
 
   <form class="flex flex-col gap-4 w-full">
 
-    <input
-      class="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all text-sm sm:text-base"
-      type="text"
-      placeholder="Product's Name"
-      [value]="name()"
-      (input)="name.set(txtName.value)"
-      #txtName
-    />
+    <!-- Name -->
+    <div class="flex flex-col">
+      <label class="mb-1 text-gray-700 font-medium" for="txtName">Product's Name</label>
+      <input
+        id="txtName"
+        class="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all text-sm sm:text-base"
+        type="text"
+        [value]="name()"
+        (input)="name.set(txtName.value)"
+        #txtName
+      />
+    </div>
 
-    <input
-      class="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all text-sm sm:text-base"
-      type="number"
-      placeholder="Quantity"
-      [value]="quantity()"
-      (input)="quantity.set(+txtQuantity.value)"
-      #txtQuantity
-    />
+    <!-- Quantity -->
+    <div class="flex flex-col">
+      <label class="mb-1 text-gray-700 font-medium" for="txtQuantity">Quantity</label>
+      <input
+        id="txtQuantity"
+        class="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all text-sm sm:text-base"
+        type="number"
+        [value]="quantity()"
+        (input)="quantity.set(+txtQuantity.value)"
+        #txtQuantity
+      />
+    </div>
 
-    <input
-      class="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all text-sm sm:text-base"
-      type="number"
-      placeholder="Price"
-      [value]="price()"
-      (input)="price.set(+txtPrice.value)"
-      #txtPrice
-    />
+    <!-- Price -->
+    <div class="flex flex-col">
+      <label class="mb-1 text-gray-700 font-medium" for="txtPrice">Price</label>
+      <input
+        id="txtPrice"
+        class="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all text-sm sm:text-base"
+        type="number"
+        [value]="price()"
+        (input)="price.set(+txtPrice.value)"
+        #txtPrice
+      />
+    </div>
 
-    <input
-      class="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all text-sm sm:text-base"
-      type="text"
-      placeholder="Image URL"
-      [value]="image()"
-      (input)="image.set(txtImage.value)"
-      #txtImage
-    />
+    <!-- Image -->
+    <div class="flex flex-col">
+      <label class="mb-1 text-gray-700 font-medium" for="txtImage">Image URL</label>
+      <input
+        id="txtImage"
+        class="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all text-sm sm:text-base"
+        type="text"
+        [value]="image()"
+        (input)="image.set(txtImage.value)"
+        #txtImage
+      />
+    </div>
 
-    <input
-      class="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all text-sm sm:text-base"
-      placeholder="Description"
-      [value]="description()"
-      (input)="description.set(txtDescription.value)"
-      #txtDescription
-    />
+    <!-- Description -->
+    <div class="flex flex-col">
+      <label class="mb-1 text-gray-700 font-medium" for="txtDescription">Description</label>
+      <input
+        id="txtDescription"
+        class="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all text-sm sm:text-base"
+        [value]="description()"
+        (input)="description.set(txtDescription.value)"
+        #txtDescription
+      />
+    </div>
 
   </form>
 

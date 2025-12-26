@@ -40,5 +40,15 @@ export class SideBarComponent {
     };
 
     this.newProduct.emit(newProduct);
+    this.resetForm()
   }
+
+  resetForm() {
+  this.name.set('');
+  this.quantity.set(0);
+  this.price.set(0);
+  this.image.set('');
+  this.description.set('');
+}
+
 }
