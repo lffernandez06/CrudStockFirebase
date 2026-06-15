@@ -5,7 +5,7 @@ import { InventoryPageComponent } from "./inventory/pages/inventory/inventoryPag
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, SingUpPageComponent, InventoryPageComponent],
+  imports: [RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

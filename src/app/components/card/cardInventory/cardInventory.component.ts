@@ -5,8 +5,9 @@ import {
   output,
   signal,
 } from '@angular/core';
-import { ProductService } from '../../../services/product.service';
+
 import { Product } from '../../../interfaces/product.interfaces';
+import { ProductService } from '../../../services/product.service';
 
 @Component({
   selector: 'app-card-inventory',
@@ -16,67 +17,79 @@ import { Product } from '../../../interfaces/product.interfaces';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CardInventoryComponent {
+
   constructor(private productService: ProductService) {}
 
+  // INPUTS (solo lectura)
   name = input<string>('');
   price = input<number>(0);
-  image = input<string | undefined>('');
-  description = input<string | undefined>('');
+  description = input<string | undefined>(undefined);
   quantity = input<number>(0);
-  id = input.required<any>();
+  id = input.required<number>();
+  image = input<string | undefined>(undefined);
+
+  // OUTPUTS
   onDelete = output<number>();
   deletedProduct = output<Product>();
   showEditTrue = output<boolean>();
+  showAlertPage = output<boolean>();
   product = output<Product>();
-  editProduct = input<Product>();
 
-  deledCard() {
-    // this.onDelete.emit(this.id());
+  // STATE LOCAL (editable)
+  imagePreview = signal<string | null>(null);
+
+  // DELETE
+  deleteCard() {
     this.deletedProduct.emit({
       name: this.name(),
       quantity: this.quantity(),
       price: this.price(),
-      image: this.image() ? this.image() : '',
-      description: this.description() ? this.description() : '',
-      id: this.id(),
-    });
-  }
-
-  showPageEditTrue() {
-    this.showEditTrue.emit(true);
-  }
-
-  // editProduct(product:Product) {
-  //   this.product.emit({
-  //     name: product.name,
-  //     quantity: product.quantity,
-  //     price: product.price,
-  //     image: product.image,
-  //     description: product.description,
-  //     id: product.id,
-  //   })
-  // }
-
-  emitProduct() {
-    this.product.emit({
-      name: this.name(),
-      quantity: this.quantity(),
-      price: this.price(),
-      image: this.image(),
+      image: this.imagePreview() || this.image(),
       description: this.description(),
       id: this.id(),
     });
   }
 
-  // emitProduct(){
-  //   this.product.emit({
-  //     name: this.name(),
-  //     quantity: this.quantity(),
-  //     price: this.price(),
-  //     image: this.image(),
-  //     description: this.description(),
-  //     id: this.id(),
-  //   })
+  // FILE SELECT
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
 
-  // }
+    if (!input.files?.length) return;
+
+    const file = input.files[0];
+
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      const result = reader.result;
+
+      if (typeof result !== 'string') return;
+
+      this.imagePreview.set(result);
+    };
+
+    reader.readAsDataURL(file);
+  }
+
+  // ALERT
+  showAlertPageTrue() {
+    this.showAlertPage.emit(true);
+  }
+
+  // EDIT
+  showPageEditTrue() {
+    this.showEditTrue.emit(true);
+  }
+
+  // EMIT PRODUCT
+  emitProduct() {
+    this.product.emit({
+      name: this.name(),
+      quantity: this.quantity(),
+      price: this.price(),
+      image: this.imagePreview() || this.image(),
+      description: this.description(),
+      id: this.id(),
+    });
+  }
 }

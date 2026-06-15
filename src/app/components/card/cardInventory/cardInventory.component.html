@@ -1,60 +1,93 @@
 <div
   class="relative flex flex-col text-gray-700 bg-white shadow-md rounded-xl w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-sm"
 >
-  <!-- Imagen -->
-  <div class="relative mx-4 mt-4 overflow-hidden rounded-xl h-48 sm:h-50 md:h-56 lg:h-60">
+
+  <!-- IMAGEN -->
+  <div
+    class="relative mx-4 mt-4 overflow-hidden rounded-xl h-48 sm:h-50 md:h-56 lg:h-60"
+  >
     <img
-      src="{{ image() }}"
+      [src]="imagePreview || image()"
       alt="card-image"
       class="object-cover w-full h-full"
     />
+
+    <!-- botón agregar imagen -->
+    <div
+      class="absolute top-3 right-3 h-8 w-8 bg-gray-200 rounded-full opacity-75 hover:opacity-100 transition cursor-pointer flex items-center justify-center"
+      (click)="fileInput.click()"
+    >
+      <svg
+        class="h-5 w-5 text-gray-600"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <line x1="12" y1="5" x2="12" y2="19"></line>
+        <line x1="5" y1="12" x2="19" y2="12"></line>
+      </svg>
+    </div>
+
+    <!-- input oculto -->
+    <input
+      #fileInput
+      type="file"
+      accept="image/*"
+      hidden
+      (change)="onFileSelected($event)"
+    />
   </div>
 
-  <!-- Contenido -->
+  <!-- CONTENIDO -->
   <div class="p-4 sm:p-6">
 
-    <!-- Nombre -->
     <div class="mb-2">
-
-      <p class="font-medium text-blue-gray-900 text-sm sm:text-base">{{ name() }}</p>
+      <p class="font-medium text-blue-gray-900 text-sm sm:text-base">
+        {{ name() }}
+      </p>
     </div>
 
-    <!-- Precio y Cantidad en la misma fila -->
     <div class="flex justify-between items-center mb-2">
-      <!-- Price -->
       <div class="flex flex-col">
         <span class="text-gray-500 text-xs sm:text-sm">Price</span>
-        <p class="font-medium text-blue-gray-900 text-sm sm:text-base">${{ price() }}</p>
+        <p class="font-medium text-blue-gray-900 text-sm sm:text-base">
+          ${{ price() }}
+        </p>
       </div>
 
-      <!-- Quantity -->
       <div class="flex flex-col text-right">
         <span class="text-gray-500 text-xs sm:text-sm">Quantity</span>
-        <p class="font-medium text-blue-gray-900 text-sm sm:text-base">{{ quantity() }}</p>
+        <p class="font-medium text-blue-gray-900 text-sm sm:text-base">
+          {{ quantity() }}
+        </p>
       </div>
     </div>
 
-    <!-- Descripción -->
     <p class="text-xs sm:text-sm text-gray-700 opacity-75 wrap-break-word">
       {{ description() }}
     </p>
   </div>
 
-  <!-- Botones -->
+  <!-- BOTONES -->
   <div class="p-4 sm:p-6 pt-0">
     <div class="flex flex-col sm:flex-row gap-2 sm:gap-4">
+
       <button
         (click)="showPageEditTrue(); emitProduct()"
         class="w-full sm:w-1/2 text-xs sm:text-sm font-bold uppercase py-2 sm:py-3 px-4 sm:px-6 rounded-lg bg-blue-gray-900/10 text-blue-gray-900 hover:scale-105 transition cursor-pointer"
       >
         Edit
       </button>
+
       <button
-        (click)="deledCard()"
+        (click)="showAlertPageTrue(); deleteCard()"
         class="w-full sm:w-1/2 text-xs sm:text-sm font-bold uppercase py-2 sm:py-3 px-4 sm:px-6 rounded-lg bg-blue-gray-900/10 text-blue-gray-900 hover:scale-105 transition cursor-pointer"
       >
         Delete
       </button>
+
     </div>
   </div>
+
 </div>

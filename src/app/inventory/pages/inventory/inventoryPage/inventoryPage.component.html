@@ -20,8 +20,11 @@
         [image]="item.image"
         [id]="item.id"
         [name]="item.name"
-        (deletedProduct)="deletedProductFromDoc($event)"
+        (showAlertPage)="showAlertPageTrue($event)"
         (showEditTrue)="showPageEditTrue($event)"
+        (showAlertPage)="showAlertPageTrue($event)"
+        (deletedProduct)="saveDeletedProduct($event)"
+
       />
       <!-- (onDelete)="deletedCard($event)" -->
 
@@ -36,4 +39,24 @@
     </div>
   </div>
   }
+
+  @if (showAlert() ) {
+    <div class="fixed inset-0">
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+
+
+      <app-alert-component [deletedProductReference]="deletedProduct()"
+      (showAlertPageFalse)="hideALertPage($event)" />
+
+    </div>
+  </div>
+
+
+  }
+
+  <button aria-label="Menu">
+  ☰
+  </button>
 </div>
+
+

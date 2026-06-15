@@ -12,19 +12,25 @@ import { SideBarComponent } from '../../../../components/sideBar/sideBar/sideBar
 import { Product } from '../../../../interfaces/product.interfaces';
 import { ProductService } from '../../../../services/product.service';
 import { EditPage } from '../../editPage/editPage/editPage';
+import { CommonModule } from '@angular/common';
+import { AlertComponent } from "../../../../components/alerts/alert.component/alert.component";
+
 
 @Component({
   selector: 'app-inventory-page',
   standalone: true,
-  imports: [CardInventoryComponent, SideBarComponent, EditPage],
+  imports: [CardInventoryComponent, SideBarComponent, EditPage, CommonModule, AlertComponent],
   templateUrl: './inventoryPage.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InventoryPageComponent implements OnInit {
 
+
   showPage = signal<boolean>(false);
   cardList = signal<Product[]>([]);
-
+  isSidebarOpen = false;
+  showAlert = signal<boolean>(false);
+  deletedProduct = signal<Product | null>(null);
 
   constructor(private productService: ProductService) {
 
@@ -39,14 +45,30 @@ export class InventoryPageComponent implements OnInit {
     });
   }
 
+
+  hideALertPage($event:boolean){
+    this.showAlert.set($event);
+  }
+  showAlertPageTrue($event:boolean) {
+  this.showAlert.set($event)
+  }
   showPageEdit($event: boolean) {
     this.showPage.set($event);
   }
   showPageEditTrue($event: boolean) {
     this.showPage.set($event);
   }
-  deletedProductFromDoc(product: Product) {
-    this.productService.deletedProducts(product);
+  // deletedProductFromDoc(product: Product) {
+  //   this.productService.deletedProducts(product);
+  //   console.log(product);
+
+  // // }
+
+  // }
+
+  saveDeletedProduct(product: Product) {
+    this.deletedProduct.set(product);
+    console.log(product);
   }
 
   async addNewProduct(product: Product) {

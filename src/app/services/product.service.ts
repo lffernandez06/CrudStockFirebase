@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import {
   collection,
   Firestore,
@@ -9,7 +9,11 @@ import {
   updateDoc,
 } from '@angular/fire/firestore';
 import { Product } from '../interfaces/product.interfaces';
-import { BehaviorSubject, filter, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, filter, Observable, of } from 'rxjs';
+import { authState, createUserWithEmailAndPassword } from '@angular/fire/auth';
+import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { Auth } from '@angular/fire/auth';
+import { Storage, ref, uploadBytes, getDownloadURL } from '@angular/fire/storage';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +21,23 @@ import { BehaviorSubject, filter, Observable, Subject } from 'rxjs';
 export class ProductService {
   private crearProduct$ = new BehaviorSubject<Product | null>(null);
 
-  constructor(private firestore: Firestore) {}
+  user = signal('');
+
+  constructor(private firestore: Firestore, private auth: Auth) {}
+
+
+  register({user, email, password}:any){
+
+    return createUserWithEmailAndPassword(this.auth, email, password);
+  }
+
+
+  login({email, password}:any){
+
+    return signInWithEmailAndPassword(this.auth, email, password)
+
+  }
+
 
   addProduct(product: Product) {
     const productRef = collection(this.firestore, 'product');
@@ -34,6 +54,7 @@ export class ProductService {
   deletedProducts(product: Product) {
     const productDocRef = doc(this.firestore, `product/${product.id}`);
     return deleteDoc(productDocRef);
+
   }
 
   addProductEdit(product: Product) {
@@ -51,4 +72,29 @@ export class ProductService {
     const { id: _, ...productData } = product;
     return updateDoc(productRef, productData);
   }
+
+  getOutToken():Observable<boolean> {
+    const token = localStorage.getItem('token');
+
+    return of(!!token);
+  }
+   isAuthenticated() {
+    return authState(this.auth);
+  }
+
+  logout() {
+    return signOut(this.auth);
+  }
+
+  // async uploadImage(file: File): Promise<string> {
+
+  //   const filePath = `images/${Date.now()}_${file.name}`;
+  //   const storageRef = ref(this.storage, filePath);
+
+  //   await uploadBytes(storageRef, file);
+
+  //   const url = await getDownloadURL(storageRef);
+
+  //   return url;
+  // }
 }

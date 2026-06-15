@@ -2,25 +2,25 @@
   class="overflow-y-hidden h-screen flex items-center justify-center bg-gray-100 px-4 sm:px-6 lg:px-8"
 >
   <form
+    [formGroup]="myFormLogin"
     class="flex flex-col gap-4 w-full max-w-md bg-white p-8 rounded-2xl shadow-lg border border-gray-300"
-    [formGroup]="myForm"
   >
-    <h2 class="text-3xl font-bold text-center text-gray-800">Inventory</h2>
+    <h2 class="text-3xl font-bold text-center text-gray-800">Login</h2>
 
-    <input
+    <!-- <input
       class="text-base border-2 w-full p-3 border-gray-400 rounded-lg focus:border-green-500 focus:ring-1 focus:ring-green-500 transition"
       type="text"
       placeholder="User name"
       formControlName="name"
-    />
+    /> -->
 
-    @if (showMessageError("name")) {
+    <!-- @if (showMessageError("name")) {
       @if (isvalidField("name")) {
         <span class="form-text text-amber-700">
           {{ getFieldError("name") }}
         </span>
       }
-    }
+    } -->
 
     <input
       class="text-base border-2 w-full p-3 border-gray-400 rounded-lg focus:border-green-500 focus:ring-1 focus:ring-green-500 transition"
@@ -29,13 +29,13 @@
       formControlName="email"
     />
 
-    @if (showMessageError("email")) {
+    <!-- @if (showMessageError("email")) {
       @if (isvalidField("email")) {
         <span class="form-text text-amber-700">
           {{ getFieldError("email") }}
         </span>
       }
-    }
+    } -->
 
     <input
       class="text-base border-2 w-full p-3 border-gray-400 rounded-lg focus:border-green-500 focus:ring-1 focus:ring-green-500 transition"
@@ -44,47 +44,26 @@
       formControlName="password"
     />
 
-    @if (showMessageError("password")) {
+    <!-- @if (showMessageError("password")) {
       @if (isvalidField("password")) {
         <span class="form-text text-amber-700">
           {{ getFieldError("password") }}
         </span>
       }
-    }
+    } -->
 
     <button
-      (click)="onSubmit()"
-      class="w-full py-3 mt-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition"
-    >
-      Sign In
-    </button>
-
-    <button
-      (click)="navigateToLogIn()"
+      (click)="login()"
       class="w-full py-3 mt-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition"
     >
       Log In
     </button>
+
+     <button
+      (click)="singUp()"
+      class="w-full py-3 mt-2 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition"
+    >
+      Sign Up
+    </button>
   </form>
-</div>
-<!-- --------------------------------------- -->
-<div class="row">
-  <div class="col">
-    <span>pristine</span>
-    <pre> {{ myForm.controls["name"].pristine | json }} </pre>
-    <pre> {{ myForm.controls["email"].pristine | json }} </pre>
-    <pre> {{ myForm.controls["password"].pristine | json }} </pre>
-
-    <span>Name</span>
-    <pre> {{ myForm.controls["name"].value | json }} </pre>
-
-    <span>Name Errors</span>
-    <pre> {{ myForm.controls["name"].errors | json }} </pre>
-
-    <span>email</span>
-    <pre> {{ myForm.controls["email"].value | json }} </pre>
-
-    <span>Email Errors</span>
-    <pre> {{ myForm.controls["email"].errors | json }} </pre>
-  </div>
 </div>
