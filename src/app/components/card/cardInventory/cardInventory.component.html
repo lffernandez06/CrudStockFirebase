@@ -6,8 +6,10 @@
   <div
     class="relative mx-4 mt-4 overflow-hidden rounded-xl h-48 sm:h-50 md:h-56 lg:h-60"
   >
+
+    <!-- imagen (preview o actual o default) -->
     <img
-      [src]="imagePreview || image()"
+      [src]="imagePreview() || image()"
       alt="card-image"
       class="object-cover w-full h-full"
     />
@@ -42,13 +44,16 @@
   <!-- CONTENIDO -->
   <div class="p-4 sm:p-6">
 
+    <!-- NAME -->
     <div class="mb-2">
       <p class="font-medium text-blue-gray-900 text-sm sm:text-base">
         {{ name() }}
       </p>
     </div>
 
+    <!-- PRICE + QUANTITY -->
     <div class="flex justify-between items-center mb-2">
+
       <div class="flex flex-col">
         <span class="text-gray-500 text-xs sm:text-sm">Price</span>
         <p class="font-medium text-blue-gray-900 text-sm sm:text-base">
@@ -62,11 +67,14 @@
           {{ quantity() }}
         </p>
       </div>
+
     </div>
 
+    <!-- DESCRIPTION -->
     <p class="text-xs sm:text-sm text-gray-700 opacity-75 wrap-break-word">
       {{ description() }}
     </p>
+
   </div>
 
   <!-- BOTONES -->
