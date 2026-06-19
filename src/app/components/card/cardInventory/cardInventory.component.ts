@@ -18,6 +18,7 @@ import { ProductService } from '../../../services/product.service';
 })
 export class CardInventoryComponent {
 
+
   constructor(private productService: ProductService) {}
 
   name = input<string>('');
@@ -31,6 +32,8 @@ export class CardInventoryComponent {
   showEditTrue = output<boolean>();
   showAlertPage = output<boolean>();
   product = output<Product>();
+  productReview = output<Product>();
+  showStockPageTrue = output<boolean>();
 
 
   imagePreview = signal<string | null>(null);
@@ -86,4 +89,19 @@ export class CardInventoryComponent {
       id: this.id(),
     });
   }
+
+  stockReview() {
+    this.productReview.emit({
+      name: this.name(),
+      quantity: this.quantity(),
+      price: this.price(),
+      image: this.imagePreview() || this.image(),
+      description: this.description(),
+      id: this.id(),
+
+    });
+
+    this.showStockPageTrue.emit(true);
+  }
+
 }

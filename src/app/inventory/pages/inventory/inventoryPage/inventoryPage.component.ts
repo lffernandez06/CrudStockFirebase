@@ -14,12 +14,13 @@ import { ProductService } from '../../../../services/product.service';
 import { EditPage } from '../../editPage/editPage/editPage';
 import { CommonModule } from '@angular/common';
 import { AlertComponent } from "../../../../components/alerts/alert.component/alert.component";
+import { StockReview } from "../../../../components/stock.review/stock.review";
 
 
 @Component({
   selector: 'app-inventory-page',
   standalone: true,
-  imports: [CardInventoryComponent, SideBarComponent, EditPage, CommonModule, AlertComponent],
+  imports: [CardInventoryComponent, SideBarComponent, EditPage, CommonModule, AlertComponent, StockReview],
   templateUrl: './inventoryPage.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -31,6 +32,7 @@ export class InventoryPageComponent implements OnInit {
   isSidebarOpen = false;
   showAlert = signal<boolean>(false);
   deletedProduct = signal<Product | null>(null);
+  elementToReview = signal<Product | null>(null);
 
   constructor(private productService: ProductService) {
 
@@ -85,4 +87,9 @@ export class InventoryPageComponent implements OnInit {
   // deletedCard(id:number){
   //   this.cardList.update((resp)=> resp.filter((resp) => id != resp.id  ) );
   // }
+
+  handleStockReview($event: Product) {
+    this.elementToReview.set($event);
+  }
+
 }
