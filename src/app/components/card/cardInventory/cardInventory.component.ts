@@ -20,25 +20,21 @@ export class CardInventoryComponent {
 
   constructor(private productService: ProductService) {}
 
-  // INPUTS (solo lectura)
   name = input<string>('');
   price = input<number>(0);
   description = input<string | undefined>(undefined);
   quantity = input<number>(0);
   id = input.required<number>();
   image = input<string | undefined>(undefined);
-
-  // OUTPUTS
   onDelete = output<number>();
   deletedProduct = output<Product>();
   showEditTrue = output<boolean>();
   showAlertPage = output<boolean>();
   product = output<Product>();
 
-  // STATE LOCAL (editable)
+
   imagePreview = signal<string | null>(null);
 
-  // DELETE
   deleteCard() {
     this.deletedProduct.emit({
       name: this.name(),
@@ -50,7 +46,7 @@ export class CardInventoryComponent {
     });
   }
 
-  // FILE SELECT
+
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
 
@@ -71,17 +67,15 @@ export class CardInventoryComponent {
     reader.readAsDataURL(file);
   }
 
-  // ALERT
   showAlertPageTrue() {
     this.showAlertPage.emit(true);
   }
 
-  // EDIT
+
   showPageEditTrue() {
     this.showEditTrue.emit(true);
   }
 
-  // EMIT PRODUCT
   emitProduct() {
     this.product.emit({
       name: this.name(),
