@@ -11,26 +11,29 @@
 
   <!-- IMAGEN -->
   <div
+  (click)="fileInput.click(); $event.stopPropagation()"
     class="relative mx-4 mt-4 overflow-hidden rounded-xl h-48 sm:h-50 md:h-56 lg:h-60"
   >
 
     <!-- imagen (preview o actual o default) -->
 
     <div
+
   class="cursor-pointer h-full w-full bg-gray-100 hover:bg-gray-300
   transition-colors duration-300 flex items-center justify-center"
 >
-  <img (click)="fileInput.click()"
-    [src]="imagePreview() || image()"
-    alt="card-image"
-    class="object-cover w-full h-full"
-  />
+  <img
+
+  [src]="imagePreview() || image()"
+  alt="card-image"
+  class="object-cover w-full h-full"
+/>
 </div>
 
 
     <div
       class="absolute top-3 right-3 h-8 w-8 bg-gray-200 rounded-full opacity-75 hover:opacity-100 transition cursor-pointer flex items-center justify-center"
-      (click)="fileInput.click()"
+      (click)="fileInput.click(); $event.stopPropagation()"
     >
       <svg
         class="h-5 w-5 text-gray-600"
@@ -95,14 +98,13 @@
   <div class="flex flex-col sm:flex-row gap-2 sm:gap-4">
 
     <button
-      (click)="showPageEditTrue(); emitProduct()"
+      (click)="showPageEditTrue(); emitProduct(); $event.stopPropagation()"
       class="w-full sm:w-1/2 text-xs sm:text-sm font-bold uppercase py-2 sm:py-3 px-4 sm:px-6 rounded-lg bg-blue-500 text-white hover:bg-blue-600 hover:scale-105 transition-all duration-300 cursor-pointer"
     >
       Edit
     </button>
-
     <button
-      (click)="showAlertPageTrue(); deleteCard()"
+      (click)="showAlertPageTrue(); deleteCard(); $event.stopPropagation()"
       class="w-full sm:w-1/2 text-xs sm:text-sm font-bold uppercase py-2 sm:py-3 px-4 sm:px-6 rounded-lg bg-blue-500 text-white hover:bg-blue-600 hover:scale-105 transition-all duration-300 cursor-pointer"
     >
       Delete

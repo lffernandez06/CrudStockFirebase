@@ -33,6 +33,8 @@ export class InventoryPageComponent implements OnInit {
   showAlert = signal<boolean>(false);
   deletedProduct = signal<Product | null>(null);
   elementToReview = signal<Product | null>(null);
+  showAlertStockPage = signal<boolean>(false);
+  showSidebar = signal(true);
 
   constructor(private productService: ProductService) {
 
@@ -47,6 +49,9 @@ export class InventoryPageComponent implements OnInit {
     });
   }
 
+  toggleSidebar() {
+  this.showSidebar.update(value => !value);
+  }
 
   hideALertPage($event:boolean){
     this.showAlert.set($event);
@@ -90,6 +95,14 @@ export class InventoryPageComponent implements OnInit {
 
   handleStockReview($event: Product) {
     this.elementToReview.set($event);
+  }
+
+  showStockPage($event: boolean) {
+    this.showAlertStockPage.set($event);
+  }
+
+  closeReview($event: boolean) {
+    this.showAlertStockPage.set($event);
   }
 
 }
