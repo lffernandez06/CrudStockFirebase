@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  inject,
   input,
   output,
   signal,
@@ -8,6 +9,7 @@ import {
 
 import { Product } from '../../../interfaces/product.interfaces';
 import { ProductService } from '../../../services/product.service';
+
 
 @Component({
   selector: 'app-card-inventory',
@@ -20,6 +22,7 @@ export class CardInventoryComponent {
 
 
   constructor(private productService: ProductService) {}
+
 
   name = input<string>('');
   price = input<number>(0);
@@ -34,6 +37,7 @@ export class CardInventoryComponent {
   product = output<Product>();
   productReview = output<Product>();
   showStockPageTrue = output<boolean>();
+
 
 
   imagePreview = signal<string | null>(null);
@@ -103,5 +107,7 @@ export class CardInventoryComponent {
 
     this.showStockPageTrue.emit(true);
   }
+
+
 
 }

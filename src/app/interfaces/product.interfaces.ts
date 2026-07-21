@@ -12,3 +12,7 @@
 
 }
 
+export interface Feature {
+  name: string;
+  values: string [];
+}
