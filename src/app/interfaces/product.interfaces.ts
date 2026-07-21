@@ -15,4 +15,6 @@
 export interface Feature {
   name: string;
   values: string [];
+  stock?: number;
+  id?: number;
 }

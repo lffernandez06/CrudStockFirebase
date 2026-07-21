@@ -1,72 +1,49 @@
 <div class="w-full h-dvh flex overflow-hidden bg-gray-100">
 
+  <!-- Floating Cart -->
+<button
+  class="fixed bottom-6 right-6 z-50 flex h-16 w-16 items-center justify-center rounded-full bg-blue-600 text-white shadow-2xl transition-all duration-300 hover:scale-110 hover:bg-blue-700"
+>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    class="h-8 w-8"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <circle cx="9" cy="20" r="1.5"/>
+    <circle cx="18" cy="20" r="1.5"/>
+    <path d="M3 4h2l2.2 10.2a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 2-1.6L21 7H7"/>
+  </svg>
+
+  <!-- Contador -->
+  <span
+    class="absolute -right-1 -top-1 flex h-6 w-6 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white"
+  >
+    3
+  </span>
+</button>
 
   <!-- Sidebar -->
-  @if(showSidebar()) {
-
+  @if (showSidebar()) {
     <app-side-bar
-      class="
-        shrink-0
-        relative
-        shadow-xl
-        z-20
-        transition-all
-        duration-300
-      "
+      class="shrink-0 relative shadow-xl z-20 transition-all duration-300"
       (newProduct)="addNewProduct($event)"
     />
-
   }
 
-
-
   <!-- Grid -->
-  <div
-    class="
-      flex-1
-      overflow-auto
-      p-4
-      sm:p-6
-      transition-all
-      duration-300
-    "
-  >
-
-
+  <div class="flex-1 overflow-auto p-4 sm:p-6 transition-all duration-300">
     <!-- Botón esconder / mostrar sidebar -->
     <button
       (click)="toggleSidebar()"
-      class="
-        fixed
-        top-5
-        left-5
-        z-40
-
-        w-11
-        h-11
-
-        rounded-full
-
-        bg-white
-        shadow-lg
-
-        flex
-        items-center
-        justify-center
-
-        text-gray-700
-
-        hover:bg-gray-200
-        hover:scale-105
-
-        transition-all
-        duration-300
-      "
+      class="fixed top-5 left-5 z-40 w-11 h-11 rounded-full bg-white shadow-lg flex items-center justify-center text-gray-700 hover:bg-gray-200 hover:scale-105 transition-all duration-300"
       aria-label="Menu"
     >
-
-      @if(showSidebar()) {
-
+      @if (showSidebar()) {
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="w-6 h-6"
@@ -81,10 +58,7 @@
             d="M6 18L18 6M6 6l12 12"
           />
         </svg>
-
-      }
-      @else {
-
+      } @else {
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="w-6 h-6"
@@ -99,163 +73,78 @@
             d="M4 6h16M4 12h16M4 18h16"
           />
         </svg>
-
       }
-
     </button>
 
-
-
     <!-- Container inventario -->
-    <div
-      class="
-        bg-white
-        rounded-2xl
-        shadow-sm
-        p-4
-        sm:p-6
-        min-h-full
-      "
-    >
-
-
+    <div class="bg-white rounded-2xl shadow-sm p-4 sm:p-6 min-h-full">
       <!-- GRID DINÁMICO SEGÚN SIDEBAR -->
       <div
         class="grid gap-5 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 transition-all duration-300"
-        [ngClass]="showSidebar()
-          ? 'lg:grid-cols-3 xl:grid-cols-4'
-          : 'lg:grid-cols-4 xl:grid-cols-5'"
+        [ngClass]="
+          showSidebar()
+            ? 'lg:grid-cols-3 xl:grid-cols-4'
+            : 'lg:grid-cols-4 xl:grid-cols-5'
+        "
       >
-
-
         @for (item of cardList(); track $index) {
-
-
           <app-card-inventory
-
             class="hover:-translate-y-1 transition-transform duration-300 w-full"
-
             (product)="showProduct(item)"
-
             [price]="item.price"
             [description]="item.description"
             [quantity]="item.quantity"
             [image]="item.image"
             [id]="item.id"
             [name]="item.name"
-
             (showAlertPage)="showAlertPageTrue($event)"
             (showEditTrue)="showPageEditTrue($event)"
             (deletedProduct)="saveDeletedProduct($event)"
             (productReview)="handleStockReview($event)"
             (showStockPageTrue)="showStockPage($event)"
-
           />
 
-
           <!-- (onDelete)="deletedCard($event)" -->
-
-
         }
-
-
       </div>
-
     </div>
-
   </div>
 
-
-
-
-
   <!-- Edit Product Page -->
-  @if ( showPage()) {
-
+  @if (showPage()) {
     <div class="fixed inset-0 z-50">
-
-      <div class="
-        absolute
-        top-1/2
-        left-1/2
-        -translate-x-1/2
-        -translate-y-1/2
-      ">
-
-        <app-edit-page
-          (showPage)="showPageEdit($event)"
-        />
-
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+        <app-edit-page (showPage)="showPageEdit($event)" />
       </div>
-
     </div>
-
   }
-
-
-
-
 
   <!-- Delete Alert Page -->
   @if (showAlert()) {
-
     <div class="fixed inset-0 z-50">
-
-      <div class="
-        absolute
-        top-1/2
-        left-1/2
-        -translate-x-1/2
-        -translate-y-1/2
-      ">
-
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
         <app-alert-component
           [deletedProductReference]="deletedProduct()"
           (showAlertPageFalse)="hideALertPage($event)"
         />
-
       </div>
-
     </div>
-
   }
-
-
-
-
 
   <!-- Stock Review Page -->
   @if (showAlertStockPage()) {
-
     <div class="fixed inset-0 z-50">
-
-      <div class="
-        absolute
-        top-1/2
-        left-1/2
-        -translate-x-1/2
-        -translate-y-1/2
-      ">
-
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
         <app-stock-review
           [productReview]="elementToReview()"
           (closeReviewPage)="closeReview($event)"
         />
-
       </div>
-
     </div>
-
   }
-
-
-
-
 
   <!-- Botón menú móvil -->
   <!-- <button aria-label="Menu">
     ☰
   </button> -->
-
-
 </div>

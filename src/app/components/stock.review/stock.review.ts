@@ -10,7 +10,7 @@ import {
 import { Product, Feature } from '../../interfaces/product.interfaces';
 import { FormBuilder, FormArray, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { FeaturesEdit } from "../features/featuresEdit/featuresEdit";
+import { FeaturesEdit } from '../features/featuresEdit/featuresEdit';
 
 @Component({
   selector: 'app-stock-review',
@@ -19,7 +19,6 @@ import { FeaturesEdit } from "../features/featuresEdit/featuresEdit";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StockReview {
-
   private fb = inject(FormBuilder);
   stocks: Record<number, number | undefined> = {};
   productReview = input<Product | null>(null);
@@ -35,6 +34,8 @@ export class StockReview {
   newFeatureName = signal('');
   variants = computed(() => this.generateProducts());
   editFeatureOn = signal(false);
+  cardProducts = signal<Feature[]>([]);
+
 
   closeReview() {
     this.closeReviewPage.emit(false);
@@ -44,13 +45,12 @@ export class StockReview {
     this.editFeatureOn.set(true);
   }
 
-
   printForm() {
     console.log(this.attrributes());
   }
 
   printForm2() {
-  console.log(this.productsGenerated());
+    console.log(this.productsGenerated());
   }
   //   createAttribute() {
   //   return this.fb.group({
@@ -181,26 +181,36 @@ feature = {
   }
 
   saveAllStocks() {
-  this.productsGenerated.update(products =>
-    products.map(product => ({
-      ...product,
-      stock: this.stocks[product.id] ?? product.stock ?? 0
-    }))
-  );
+    this.productsGenerated.update((products) =>
+      products.map((product) => ({
+        ...product,
+        stock: this.stocks[product.id] ?? product.stock ?? 0,
+      })),
+    );
 
-  this.stocks = {};
-}
+    this.stocks = {};
+  }
 
+  removeValue(featureName: string, value: string) {
+    this.attrributes.update((features) =>
+      features.map((feature) =>
+        feature.name === featureName
+          ? { ...feature, values: feature.values.filter((v) => v !== value) }
+          : feature,
+      ),
+    );
+  }
+  //////////////////////////////////////////////////////////
 
+  /*CarShop */
 
-removeValue(featureName: string, value: string) {
-  this.attrributes.update((features) =>
-    features.map((feature) =>
-      feature.name === featureName
-        ? { ...feature, values: feature.values.filter((v) => v !== value) }
-        : feature,
-    ),
-  );
-}
+  addToCart(_t88: any) {
+    throw new Error('Method not implemented.');
+  }
 
+  deleteProduct(product: Feature) {
+    this.productsGenerated.update((products: Feature[]) =>
+      products.filter((p) => p.id !== product.id),
+    );
+  }
 }
