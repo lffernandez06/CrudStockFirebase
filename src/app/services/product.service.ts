@@ -7,8 +7,10 @@ import {
   doc,
   deleteDoc,
   updateDoc,
+  docData,
+  DocumentReference,
 } from '@angular/fire/firestore';
-import { Product } from '../interfaces/product.interfaces';
+import { Feature, Product, Variant} from '../interfaces/product.interfaces';
 import { BehaviorSubject, filter, Observable, of } from 'rxjs';
 import { authState, createUserWithEmailAndPassword } from '@angular/fire/auth';
 import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
@@ -39,9 +41,78 @@ export class ProductService {
   }
 
 
-  addProduct(product: Product) {
+  updateFeatures(productId: string, features: Feature[]) {
+  if (!productId) {
+    throw new Error('Product ID is required');
+  }
+
+  const productRef = doc(this.firestore, 'product', productId);
+
+  return updateDoc(productRef, {
+    features
+  });
+}
+
+updateVariants(productId: string, variants: Variant[]) {
+   const productRef = doc(
+    this.firestore,
+    'product',
+    productId
+  );
+
+
+  return updateDoc(productRef, {
+    variants
+  });
+}
+
+// async saveVariant(product: Product) {
+//   const productCollection = collection(this.firestore, 'product');
+
+//   const docRef = await addDoc(productCollection, product);
+
+//   return {
+//     ...product,
+//     id: docRef.id
+//   };
+// }
+
+async saveVariants(productId: string, variants: any[]) {
+
+  const productRef = doc(this.firestore, 'product', productId);
+
+  return updateDoc(productRef, {
+    variants
+  });
+}
+
+getProductById(id: string) {
+
+  const productRef = doc(
+    this.firestore,
+    `product/${id}`
+  ) as DocumentReference<Product>;
+
+  return docData<Product>(productRef, {
+    idField: 'id'
+  });
+
+}
+
+
+updateProduct(productId: string, data: Partial<Product>) {
+  const productRef = doc(this.firestore, 'product', productId);
+
+  return updateDoc(productRef, data);
+}
+  async addProduct(product: Product) {
     const productRef = collection(this.firestore, 'product');
-    return addDoc(productRef, product);
+    const docRef = await addDoc(productRef, product);
+
+  return {
+    ...product,
+    id: docRef.id
+  };
   }
 
   getProduct(): Observable<Product[]> {

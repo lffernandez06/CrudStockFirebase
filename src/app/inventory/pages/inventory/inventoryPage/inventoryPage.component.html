@@ -1,31 +1,30 @@
 <div class="w-full h-dvh flex overflow-hidden bg-gray-100">
-
   <!-- Floating Cart -->
-<button
-  class="fixed bottom-6 right-6 z-50 flex h-16 w-16 items-center justify-center rounded-full bg-blue-600 text-white shadow-2xl transition-all duration-300 hover:scale-110 hover:bg-blue-700"
->
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    class="h-8 w-8"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="2"
-    stroke-linecap="round"
-    stroke-linejoin="round"
+  <button
+    class="fixed bottom-6 right-6 z-50 flex h-16 w-16 items-center justify-center rounded-full bg-blue-600 text-white shadow-2xl transition-all duration-300 hover:scale-110 hover:bg-blue-700"
   >
-    <circle cx="9" cy="20" r="1.5"/>
-    <circle cx="18" cy="20" r="1.5"/>
-    <path d="M3 4h2l2.2 10.2a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 2-1.6L21 7H7"/>
-  </svg>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="h-8 w-8"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <circle cx="9" cy="20" r="1.5" />
+      <circle cx="18" cy="20" r="1.5" />
+      <path d="M3 4h2l2.2 10.2a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 2-1.6L21 7H7" />
+    </svg>
 
-  <!-- Contador -->
-  <span
-    class="absolute -right-1 -top-1 flex h-6 w-6 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white"
-  >
-    3
-  </span>
-</button>
+    <!-- Contador -->
+    <span
+      class="absolute -right-1 -top-1 flex h-6 w-6 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white"
+    >
+      3
+    </span>
+  </button>
 
   <!-- Sidebar -->
   @if (showSidebar()) {

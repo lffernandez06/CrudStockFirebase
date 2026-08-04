@@ -2,15 +2,19 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  effect,
   inject,
   input,
   output,
   signal,
 } from '@angular/core';
-import { Product, Feature } from '../../interfaces/product.interfaces';
+import { Product, Feature, Variant } from '../../interfaces/product.interfaces';
 import { FormBuilder, FormArray, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { FeaturesEdit } from '../features/featuresEdit/featuresEdit';
+import { ProductService } from '../../services/product.service';
+import { async } from 'rxjs';
+import { AsyncAction } from 'rxjs/internal/scheduler/AsyncAction';
 
 @Component({
   selector: 'app-stock-review',
@@ -19,9 +23,10 @@ import { FeaturesEdit } from '../features/featuresEdit/featuresEdit';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StockReview {
+
   private fb = inject(FormBuilder);
   stocks: Record<number, number | undefined> = {};
-  productReview = input<Product | null>(null);
+  productReview = input<Product | null>();
   closeReviewPage = output<boolean>();
   showFeatures = signal<boolean>(false);
   attrributes = signal<Feature[]>([]);
@@ -36,6 +41,36 @@ export class StockReview {
   editFeatureOn = signal(false);
   cardProducts = signal<Feature[]>([]);
 
+  constructor(private productService: ProductService) {
+    effect(() => {
+      const product = this.productReview();
+
+      if (!product?.id) return;
+
+      this.loadProduct(product.id.toString());
+    });
+  }
+
+  loadProduct(id: string) {
+    this.productService.getProductById(id).subscribe((product) => {
+      if (!product) return;
+
+      const variants = product.variants ?? [];
+
+      this.productsGenerated.set(variants);
+
+      if (variants.length) {
+        const features = Object.keys(variants[0])
+          .filter((key) => key !== 'stock' && key !== 'id')
+          .map((key) => ({
+            name: key,
+            values: [...new Set(variants.map((v) => v[key as keyof Variant]))],
+          }));
+
+        this.attrributes.set(features);
+      }
+    });
+  }
 
   closeReview() {
     this.closeReviewPage.emit(false);
@@ -153,23 +188,27 @@ feature = {
     input.value = '';
   }
 
-  generateProducts() {
-    const a = this.attrributes().reduce(
+  async generateProducts() {
+    const product = this.productReview();
+    if (!product || !product.id) {
+      console.error('El producto no tiene ID');
+      return;
+    }
+    const variants = this.attrributes().reduce(
       (variants, feature) => {
         return variants.flatMap((variant) =>
           feature.values.map((value) => ({
             ...variant,
             [feature.name]: value,
-            id: Math.random(),
+            stock: 0,
+            id: crypto.randomUUID(),
           })),
         );
       },
-      [{}],
+      [{} as any],
     );
-
-    console.log(a);
-    this.productsGenerated.set(a);
-    return a;
+    console.log(variants);
+    this.productsGenerated.set(variants);
   }
 
   saveStock(id: number, stock: number) {
@@ -180,7 +219,8 @@ feature = {
     );
   }
 
-  saveAllStocks() {
+  async saveAllStocks() {
+    // Actualizar signal local
     this.productsGenerated.update((products) =>
       products.map((product) => ({
         ...product,
@@ -188,7 +228,32 @@ feature = {
       })),
     );
 
+    // Guardar en Firebase
+    const products = this.productsGenerated();
+
+    await Promise.all(
+      products.map((product) =>
+        this.productService.updateProduct(String(product.id), {
+          stock: product.stock,
+        }),
+      ),
+    );
+
     this.stocks = {};
+  }
+
+  async saveVariantsProduct() {
+    const product = this.productReview();
+    console.log('Guardando:', product?.id, this.productsGenerated());
+    if (!product?.id) {
+      console.error('El producto no tiene ID');
+      return;
+    }
+
+    await this.productService.saveVariants(
+      product.id.toString(),
+      this.productsGenerated(),
+    );
   }
 
   removeValue(featureName: string, value: string) {
@@ -200,6 +265,16 @@ feature = {
       ),
     );
   }
+
+  removeFeature(featureName: string) {
+
+  this.attrributes.update((features) =>
+    features.filter(
+      (feature) => feature.name !== featureName
+    )
+  );
+
+}
   //////////////////////////////////////////////////////////
 
   /*CarShop */
@@ -208,9 +283,22 @@ feature = {
     throw new Error('Method not implemented.');
   }
 
-  deleteProduct(product: Feature) {
-    this.productsGenerated.update((products: Feature[]) =>
-      products.filter((p) => p.id !== product.id),
+  async deleteProduct(variantToDelete: Variant) {
+    const product = this.productReview();
+
+    if (!product?.id) return;
+
+    const updatedVariants = this.productsGenerated().filter(
+      (v) => v.id !== variantToDelete.id,
+    );
+
+    console.log('DESPUÉS DE BORRAR:', updatedVariants);
+
+    this.productsGenerated.set(updatedVariants);
+
+    await this.productService.updateVariants(
+      product.id.toString(),
+      updatedVariants,
     );
   }
 }
