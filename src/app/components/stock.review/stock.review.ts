@@ -275,6 +275,34 @@ feature = {
   );
 
 }
+
+async updateStock(id:string,event:Event){
+
+ const stock = +(event.target as HTMLInputElement).value;
+
+
+ this.productsGenerated.update(products =>
+   products.map(product =>
+     product.id === id
+       ? {...product,stock}
+       : product
+   )
+ );
+
+
+ const product = this.productReview();
+
+ if(product?.id){
+
+   await this.productService.updateVariantStock(
+      product.id.toString(),
+      id,
+      stock
+   );
+
+ }
+
+}
   //////////////////////////////////////////////////////////
 
   /*CarShop */

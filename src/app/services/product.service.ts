@@ -115,6 +115,22 @@ updateProduct(productId: string, data: Partial<Product>) {
   };
   }
 
+  async updateVariantStock(
+      productId:string,
+      variantId:string,
+      stock:number
+    ){
+
+    const variantRef = doc(
+      this.firestore,
+      `products/${productId}/variants/${variantId}`
+    );
+
+    await updateDoc(variantRef,{
+      stock
+    });
+
+    }
   getProduct(): Observable<Product[]> {
     const productRef = collection(this.firestore, 'product');
     return collectionData(productRef, { idField: 'id' }) as Observable<
