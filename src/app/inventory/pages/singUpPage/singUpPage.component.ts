@@ -40,6 +40,10 @@ export class SingUpPageComponent {
       '',
       [Validators.required, Validators.minLength(5), Validators.maxLength(100)],
     ],
+    companyName: [
+      '',
+      [Validators.required, Validators.minLength(5), Validators.maxLength(100)],
+    ],
   });
 
   showMessageError(value: string): boolean {
@@ -73,18 +77,28 @@ export class SingUpPageComponent {
     return null;
   }
 
-  onSubmit() {
-    this.userService
-      .register(this.myForm.value)
-      .then((response) => {
-        console.log('respuesta:', response);
-        this.router.navigate(['/login']);
-        console.log('respuesta:gfdgfd');
-      })
-      .catch((error) => console.log(error));
-  }
+  // onSubmit() {
 
-  navigateToLogIn() {
+
+  //   this.userService
+  //     .register(this.myForm.value)
+  //     .then((response) => {
+  //       console.log('respuesta:', response);
+  //       this.router.navigate(['/login']);
+  //       console.log('respuesta:gfdgfd');
+  //     })
+  //     .catch((error) => console.log(error));
+  // }
+onSubmit() {
+  const { name, email, password, companyName } = this.myForm.value;
+   this.userService.register( email, password, companyName).then(
+    (response) => { console.log('respuesta:', response);
+      this.router.navigate(['/login']); }).catch((
+        error) => console.log(error)); }
+
+
+
+   navigateToLogIn() {
     this.router.navigate(['/login']);
   }
 }

@@ -13,8 +13,6 @@ import { FormBuilder, FormArray, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { FeaturesEdit } from '../features/featuresEdit/featuresEdit';
 import { ProductService } from '../../services/product.service';
-import { async } from 'rxjs';
-import { AsyncAction } from 'rxjs/internal/scheduler/AsyncAction';
 
 @Component({
   selector: 'app-stock-review',
@@ -51,26 +49,35 @@ export class StockReview {
     });
   }
 
-  loadProduct(id: string) {
-    this.productService.getProductById(id).subscribe((product) => {
-      if (!product) return;
+  // loadProduct(id: string) {
+  //   this.productService.getProductById(id).subscribe((product) => {
+  //     if (!product) return;
 
-      const variants = product.variants ?? [];
+  //     const variants = product.variants ?? [];
 
-      this.productsGenerated.set(variants);
+  //     this.productsGenerated.set(variants);
 
-      if (variants.length) {
-        const features = Object.keys(variants[0])
-          .filter((key) => key !== 'stock' && key !== 'id')
-          .map((key) => ({
-            name: key,
-            values: [...new Set(variants.map((v) => v[key as keyof Variant]))],
-          }));
+  //     if (variants.length) {
+  //       const features = Object.keys(variants[0])
+  //         .filter((key) => key !== 'stock' && key !== 'id')
+  //         .map((key) => ({
+  //           name: key,
+  //           values: [...new Set(variants.map((v) => v[key as keyof Variant]))],
+  //         }));
 
-        this.attrributes.set(features);
+  //       this.attrributes.set(features);
+  //     }
+  //   });
+  // }
+
+loadProduct(id: string) {
+  this.productService.getProductById(id).subscribe((product: Product) =>
+    { if (!product) return; const variants: Variant[] = product.variants ?? [];
+      this.productsGenerated.set(variants); if (variants.length) {
+        const features: Feature[] = Object.keys(variants[0]) .filter((key) => key !== 'stock' && key !== 'id').map((key) =>
+          ({ name: key, values: [ ...new Set( variants.map((v: Variant) => String(v[key as keyof Variant]) ) ), ], }));
+        this.attrributes.set(features); } });
       }
-    });
-  }
 
   closeReview() {
     this.closeReviewPage.emit(false);
@@ -276,32 +283,44 @@ feature = {
 
 }
 
-async updateStock(id:string,event:Event){
+// async updateStock(id:string,event:Event){
 
- const stock = +(event.target as HTMLInputElement).value;
-
-
- this.productsGenerated.update(products =>
-   products.map(product =>
-     product.id === id
-       ? {...product,stock}
-       : product
-   )
- );
+//  const stock = +(event.target as HTMLInputElement).value;
 
 
- const product = this.productReview();
+//  this.productsGenerated.update(products =>
+//    products.map(product =>
+//      product.id === id
+//        ? {...product,stock}
+//        : product
+//    )
+//  );
 
- if(product?.id){
 
-   await this.productService.updateVariantStock(
-      product.id.toString(),
-      id,
-      stock
-   );
+//  const product = this.productReview();
 
- }
+//  if(product?.id){
 
+//    await this.productService.updateVariantStock(
+//       product.id.toString(),
+//       id,
+//       stock
+//    );
+
+//  }
+
+// }
+
+
+async updateStock(id: string, event: Event) {
+  const stock = +(event.target as HTMLInputElement).value;
+  // Actualizar localmente
+  this.productsGenerated.update(products =>
+    products.map(product => product.id === id ? { ...product, stock } : product ) );
+    // Guardar TODO el array de variantes
+  const product = this.productReview(); if (product?.id) {
+    await this.productService.saveVariants( product.id.toString(), this.productsGenerated() );
+  }
 }
   //////////////////////////////////////////////////////////
 

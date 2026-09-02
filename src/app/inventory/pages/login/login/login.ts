@@ -23,6 +23,7 @@ export class LoginPageComponent {
   myFormLogin: FormGroup = this.fb.group({
     email: [''],
     password: [''],
+    companyName: [''],
   });
 
   login() {
@@ -36,6 +37,16 @@ export class LoginPageComponent {
   }
 
    singUp() {
-    this.router.navigate(['/']);
-    }
+    this.loginService
+      .register(
+        this.myFormLogin.value.email,
+        this.myFormLogin.value.password,
+        this.myFormLogin.value.companyName
+      )
+      .then((response) => {
+        console.log(response);
+        this.router.navigate(['/inventory']);
+      })
+      .catch((error) => console.log(error));
+  }
 }

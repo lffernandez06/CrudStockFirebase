@@ -52,6 +52,20 @@
       }
     }
 
+     <input
+      class="text-base border-2 w-full p-3 border-gray-400 rounded-lg focus:border-green-500 focus:ring-1 focus:ring-green-500 transition"
+      type="text"
+      placeholder="Company Name"
+      formControlName="companyName"
+    />
+    @if (showMessageError("companyName")) {
+      @if (isvalidField("companyName")) {
+        <span class="form-text text-amber-700">
+          {{ getFieldError("companyName") }}
+        </span>
+      }
+    }
+
     <button
       (click)="onSubmit()"
       class="w-full py-3 mt-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition"
