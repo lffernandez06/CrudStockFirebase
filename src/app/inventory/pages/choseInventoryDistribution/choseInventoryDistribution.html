@@ -1,0 +1,256 @@
+<div class="min-h-screen bg-base-200 flex items-center justify-center px-4 py-8 sm:py-12">
+
+  <div class="w-full max-w-5xl">
+
+    <!-- Header -->
+    <div class="text-center mb-8 sm:mb-12">
+
+      <!-- Icon -->
+      <div
+        class="inline-flex items-center justify-center
+               w-16 h-16 sm:w-20 sm:h-20
+               rounded-3xl
+               bg-primary/10 text-primary
+               mb-5
+               shadow-sm"
+      >
+        <span class="text-3xl sm:text-4xl">📦</span>
+      </div>
+
+      <!-- Title -->
+      <h1
+        class="text-3xl sm:text-4xl md:text-5xl
+               font-bold tracking-tight"
+      >
+        Welcome
+      </h1>
+
+      <!-- Subtitle -->
+      <p
+        class="text-base-content/60
+               mt-3
+               text-base sm:text-lg
+               max-w-xl
+               mx-auto"
+      >
+        Let's get your inventory set up
+      </p>
+
+    </div>
+
+
+    <!-- Options -->
+    <div
+      class="grid grid-cols-1 md:grid-cols-2
+             gap-4 sm:gap-6"
+    >
+
+      <!-- Create inventory -->
+      <button
+        type="button"
+        class="group
+               text-left
+               bg-base-100
+               rounded-3xl
+               p-6 sm:p-8
+               shadow-sm
+               hover:shadow-xl
+               hover:-translate-y-1
+               transition-all duration-300"
+        (click)="goToCreate()"
+      >
+
+        <!-- Top -->
+        <div class="flex items-start justify-between">
+
+          <!-- Icon -->
+          <div
+            class="flex items-center justify-center
+                   w-14 h-14
+                   rounded-2xl
+                   bg-primary/10
+                   text-2xl
+                   group-hover:bg-primary
+                   group-hover:text-primary-content
+                   transition-all duration-300"
+          >
+            🏪
+          </div>
+
+          <!-- Arrow -->
+          <div
+            class="flex items-center justify-center
+                   w-9 h-9
+                   rounded-full
+                   bg-base-200
+                   text-base-content/40
+                   group-hover:bg-primary/10
+                   group-hover:text-primary
+                   transition-all duration-300"
+          >
+            <span class="text-lg">→</span>
+          </div>
+
+        </div>
+
+
+        <!-- Content -->
+        <div class="mt-7">
+
+          <h2
+            class="text-xl sm:text-2xl
+                   font-bold
+                   tracking-tight"
+          >
+            Create my inventory
+          </h2>
+
+          <p
+            class="text-base-content/60
+                   mt-3
+                   leading-relaxed
+                   text-sm sm:text-base"
+          >
+            Create a new inventory to manage your
+            products, stock, and product variants.
+          </p>
+
+        </div>
+
+
+        <!-- Action -->
+        <div
+          class="mt-7
+                 flex items-center gap-2
+                 text-sm font-semibold
+                 text-primary"
+        >
+          <span>Create new inventory</span>
+
+          <span
+            class="transition-transform duration-300
+                   group-hover:translate-x-1"
+          >
+            →
+          </span>
+        </div>
+
+      </button>
+
+
+      <!-- Join inventory -->
+      <button
+        type="button"
+        class="group
+               text-left
+               bg-base-100
+               rounded-3xl
+               p-6 sm:p-8
+               shadow-sm
+               hover:shadow-xl
+               hover:-translate-y-1
+               transition-all duration-300"
+        (click)="goToJoin()"
+      >
+
+        <!-- Top -->
+        <div class="flex items-start justify-between">
+
+          <!-- Icon -->
+          <div
+            class="flex items-center justify-center
+                   w-14 h-14
+                   rounded-2xl
+                   bg-secondary/10
+                   text-2xl
+                   group-hover:bg-secondary
+                   group-hover:text-secondary-content
+                   transition-all duration-300"
+          >
+            🔗
+          </div>
+
+          <!-- Arrow -->
+          <div
+            class="flex items-center justify-center
+                   w-9 h-9
+                   rounded-full
+                   bg-base-200
+                   text-base-content/40
+                   group-hover:bg-secondary/10
+                   group-hover:text-secondary
+                   transition-all duration-300"
+          >
+            <span class="text-lg">→</span>
+          </div>
+
+        </div>
+
+
+        <!-- Content -->
+        <div class="mt-7">
+
+          <h2
+            class="text-xl sm:text-2xl
+                   font-bold
+                   tracking-tight"
+          >
+            Join an inventory
+          </h2>
+
+          <p
+            class="text-base-content/60
+                   mt-3
+                   leading-relaxed
+                   text-sm sm:text-base"
+          >
+            Have an invitation? Use an invitation
+            code to join an existing inventory.
+          </p>
+
+        </div>
+
+
+        <!-- Action -->
+        <div
+          class="mt-7
+                 flex items-center gap-2
+                 text-sm font-semibold
+                 text-secondary"
+        >
+          <span>I have an invitation</span>
+
+          <span
+            class="transition-transform duration-300
+                   group-hover:translate-x-1"
+          >
+            →
+          </span>
+        </div>
+
+      </button>
+
+    </div>
+
+
+    <!-- Footer -->
+    <div
+      class="mt-8 sm:mt-10
+             text-center
+             px-4"
+    >
+
+      <p
+        class="text-xs sm:text-sm
+               text-base-content/50
+               leading-relaxed"
+      >
+        Manage your inventory and collaborate with your team
+        from one shared workspace.
+      </p>
+
+    </div>
+
+  </div>
+
+</div>

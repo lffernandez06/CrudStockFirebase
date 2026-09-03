@@ -3,6 +3,7 @@ import {
   Component,
   inject,
   Pipe,
+  signal,
 } from '@angular/core';
 import {
   FormBuilder,
@@ -29,7 +30,7 @@ export class SingUpPageComponent {
   ) {}
 
   private fb = inject(FormBuilder);
-
+  name = signal<string>('');
   myForm: FormGroup = this.fb.group({
     name: [
       '',
@@ -90,8 +91,10 @@ export class SingUpPageComponent {
   //     .catch((error) => console.log(error));
   // }
 onSubmit() {
-  const { name, email, password, companyName } = this.myForm.value;
-   this.userService.register( email, password, companyName).then(
+  const { name, email, password } = this.myForm.value;
+  const nameProfile = name;
+  this.name.set(nameProfile);
+   this.userService.register( email, password).then(
     (response) => { console.log('respuesta:', response);
       this.router.navigate(['/login']); }).catch((
         error) => console.log(error)); }

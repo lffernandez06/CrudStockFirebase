@@ -1,0 +1,315 @@
+<div class="min-h-screen bg-base-200/30 flex items-center justify-center px-5 py-10 sm:px-8">
+
+  <div class="w-full max-w-6xl">
+
+    <div class="grid lg:grid-cols-[1fr_1.1fr] min-h-170 bg-base-100 rounded-4xl shadow-2xl overflow-hidden">
+
+
+      <!-- ================= LEFT ================= -->
+
+      <section
+        class="relative hidden lg:flex flex-col justify-between overflow-hidden bg-neutral p-12 xl:p-16 text-neutral-content"
+      >
+
+        <!-- Background decoration -->
+
+        <div
+          class="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-primary/20 blur-3xl"
+        ></div>
+
+        <div
+          class="absolute -bottom-40 -left-32 w-120 h-120 rounded-full bg-primary/10 blur-3xl"
+        ></div>
+
+
+        <!-- Content -->
+
+        <div class="relative z-10">
+
+          <!-- Brand -->
+
+          <div class="flex items-center gap-3">
+
+            <div
+              class="flex h-11 w-11 items-center justify-center rounded-xl bg-primary text-primary-content shadow-lg"
+            >
+              <i class="fa-solid fa-boxes-stacked"></i>
+            </div>
+
+            <span class="text-lg font-bold tracking-tight">
+              Inventory
+            </span>
+
+          </div>
+
+
+          <!-- Main message -->
+
+          <div class="mt-32 max-w-md">
+
+            <span
+              class="inline-flex items-center gap-2 rounded-full bg-neutral-content/10 px-3 py-1.5 text-xs font-semibold text-neutral-content/70"
+            >
+              <span class="h-1.5 w-1.5 rounded-full bg-primary"></span>
+              Team workspace
+            </span>
+
+
+            <h2 class="mt-6 text-5xl font-bold leading-[1.08] tracking-tight xl:text-6xl">
+
+              Everything your
+              <span class="text-primary">
+                team
+              </span>
+              needs.
+
+            </h2>
+
+
+            <p class="mt-7 max-w-sm text-base leading-7 text-neutral-content/55">
+              Join your company's workspace and manage products,
+              inventory and stock together from one place.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <!-- Bottom -->
+
+        <div class="relative z-10 flex items-center gap-3 text-sm text-neutral-content/40">
+
+          <i class="fa-solid fa-shield-halved"></i>
+
+          <span>
+            Secure workspace
+          </span>
+
+        </div>
+
+      </section>
+
+
+
+      <!-- ================= RIGHT ================= -->
+
+      <section class="flex flex-col justify-center px-6 py-10 sm:px-12 lg:px-14 xl:px-20">
+
+
+        <!-- Mobile brand -->
+
+        <div class="mb-12 flex items-center gap-3 lg:hidden">
+
+          <div
+            class="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-primary-content"
+          >
+            <i class="fa-solid fa-boxes-stacked"></i>
+          </div>
+
+          <span class="font-bold">
+            Inventory
+          </span>
+
+        </div>
+
+
+        <div class="w-full max-w-lg mx-auto">
+
+
+          <!-- Header -->
+
+          <div>
+
+            <div
+              class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-primary"
+            >
+              <i class="fa-solid fa-user-plus text-xl"></i>
+            </div>
+
+
+            <h1
+              class="text-3xl font-bold tracking-tight sm:text-4xl"
+            >
+              Join a company
+            </h1>
+
+
+            <p
+              class="mt-3 max-w-md text-sm leading-6 text-base-content/55 sm:text-base"
+            >
+              Use the invitation code provided by your
+              company administrator to join the workspace.
+            </p>
+
+          </div>
+
+
+
+          <!-- Form -->
+          <form [formGroup]="myFormJoinInventory" class="mt-10 space-y-7" (ngSubmit)="joinInventory()">
+
+
+          <div class="mt-10 space-y-7">
+
+
+            <!-- Code -->
+
+            <div>
+
+              <label
+                for="invitation-code"
+                class="mb-2.5 block text-sm font-semibold"
+              >
+                Invitation code
+              </label>
+
+
+              <div class="relative ">
+
+                <i
+                  class="fa-solid fa-key absolute left-4 top-1/2 -translate-y-1/2 text-sm text-base-content/35"
+                ></i>
+
+
+
+                <input
+                  id="invitation-code"
+                  type="text"
+                  placeholder="User name"
+                  class=" input input-bordered h-14 w-full pl-11 text-base font-medium focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/10"
+                  formControlName="name"
+
+                />
+
+                 <input
+                  id="invitation-code"
+                  type="text"
+                  placeholder="Enter your code"
+                  class="top-2 input input-bordered h-14 w-full pl-11 text-base font-medium focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/10"
+                  formControlName="code"
+                />
+
+              </div>
+
+
+              <p class="mt-2 text-xs text-base-content/45">
+                Example: ABC123
+              </p>
+
+            </div>
+
+            @if (myFormJoinInventory.invalid && (myFormJoinInventory.get('name')?.touched || myFormJoinInventory.get('code')?.touched)) {
+              <span class="form-text text-amber-700">
+                Please fill in all required fields.
+              </span>
+            }
+            <!-- Company -->
+
+            <div
+              class="rounded-2xl bg-base-200/60 p-4 sm:p-5"
+            >
+
+              <div class="flex items-center gap-4">
+
+                <div
+                  class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-base-100 text-base-content/35 shadow-sm"
+                >
+                  <i class="fa-solid fa-building"></i>
+                </div>
+
+
+                <div class="min-w-0">
+
+                  <p
+                    class="text-[11px] font-semibold uppercase tracking-wider text-base-content/40"
+                  >
+                    Company
+                  </p>
+
+                  <p
+                    class="mt-1 truncate text-sm font-semibold"
+                  >
+                    Your company will appear here
+                  </p>
+
+                </div>
+
+              </div>
+
+            </div>
+
+
+
+            <!-- Button -->
+
+            <button
+              type="button"
+              class="btn btn-primary h-14 min-h-14 w-full rounded-xl text-base font-semibold shadow-lg shadow-primary/20"
+            >
+
+              Join company
+
+              <i class="fa-solid fa-arrow-right"></i>
+
+            </button>
+
+
+
+            <!-- Help -->
+
+            <div class="text-center">
+
+              <p class="text-sm text-base-content/45">
+                Don't have an invitation code?
+              </p>
+
+              <button
+                type="button"
+                class="mt-1 text-sm font-semibold text-primary hover:underline"
+              >
+                Contact your administrator
+              </button>
+
+            </div>
+
+          </div>
+
+
+
+          </form>
+
+          <!-- Back -->
+
+       <div class="mt-10">
+
+ <button
+  (click)="backbutton()"
+  type="button"
+  class="group inline-flex items-center gap-2
+         text-sm font-medium
+         text-base-content/50
+         hover:text-primary
+         transition-colors duration-200
+         cursor-pointer"
+>
+  <i
+    class="fa-solid fa-arrow-left
+           transition-transform duration-200
+           group-hover:-translate-x-1"
+  ></i>
+
+  <span>Back</span>
+</button>
+</div>
+
+
+        </div>
+
+      </section>
+
+    </div>
+
+  </div>
+
+</div>

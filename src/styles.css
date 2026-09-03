@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import "tailwindcss";
+@plugin "daisyui";
 
 .button {
     border: none;
@@ -25,5 +26,5 @@
     cursor: pointer;
     background-color: rgb(217, 253, 255);
     border-radius: 7px;
-    
+
   }

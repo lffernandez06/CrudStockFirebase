@@ -80,7 +80,7 @@ export class InventoryPageComponent implements OnInit {
 
   async addNewProduct(product: Product) {
     // this.cardList.update( list => [...list, product])
-    const a = await this.productService.addProduct(product);
+    await this.productService.addProduct(product);
 
   }
 

@@ -31,7 +31,7 @@ export class LoginPageComponent {
       .login(this.myFormLogin.value)
       .then((response) => {
         console.log(response);
-        this.router.navigate(['/inventory']);
+        this.router.navigate(['/chose-inventory-distribution']);
       })
       .catch((error) => console.log(error));
   }
@@ -41,11 +41,11 @@ export class LoginPageComponent {
       .register(
         this.myFormLogin.value.email,
         this.myFormLogin.value.password,
-        this.myFormLogin.value.companyName
+
       )
       .then((response) => {
         console.log(response);
-        this.router.navigate(['/inventory']);
+        this.router.navigate(['/chose-inventory-distribution']);
       })
       .catch((error) => console.log(error));
   }

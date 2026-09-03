@@ -17,7 +17,7 @@ import { BehaviorSubject, filter, Observable, of } from 'rxjs';
 import { authState, createUserWithEmailAndPassword } from '@angular/fire/auth';
 import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { Auth } from '@angular/fire/auth';
-import { Storage, ref, uploadBytes, getDownloadURL } from '@angular/fire/storage';
+
 
 @Injectable({
   providedIn: 'root',
@@ -50,27 +50,62 @@ export class ProductService {
     await this.loadCompany(); return response; }
 
 
-  async register(email: string, password: string, companyName: string) {
-     const cred = await createUserWithEmailAndPassword(this.auth, email, password);
-     const uid = cred.user.uid;
-     // Crear empresa
-     const companyRef = await addDoc(
-      collection(this.firestore, 'companies'),
-      { name: companyName, ownerId: uid, });
-      // Guardar relación usuario - empresa
-      await setDoc(doc(this.firestore, 'users', uid),
-      { companyId: companyRef.id, role: 'admin', });
-      return cred.user;
+  // async register(email: string, password: string, companyName: string) {
+  //    const cred = await createUserWithEmailAndPassword(this.auth, email, password);
+  //    const uid = cred.user.uid;
+  //    // Crear empresa
+  //    const companyRef = await addDoc(
+  //     collection(this.firestore, 'companies'),
+  //     { name: companyName, ownerId: uid, });
+  //     // Guardar relación usuario - empresa
+  //     await setDoc(doc(this.firestore, 'users', uid),
+  //     { companyId: companyRef.id, role: 'admin', });
+  //     return cred.user;
+  //   }
+
+
+    async register(email: string, password: string) {
+      const cred = await createUserWithEmailAndPassword( this.auth, email, password );
+      // Crear perfil sin empresa
+      await setDoc(doc(this.firestore, 'users', cred.user.uid),
+      { companyId: null, role: null }); return cred.user;
+
+
     }
 
+
+    async createCompany(name: string) {
+      const user = this.auth.currentUser;
+      if (!user) return;
+      
+      const companyRef = await addDoc( 
+        collection(this.firestore, 'companies'),
+      { 
+        name: name || 'Mi inventario', 
+        ownerId: user.uid 
+      } );
+
+      await updateDoc(doc(this.firestore, 'users', user.uid), { companyId: companyRef.id, role: 'admin' });
+      this.companyId.set(companyRef.id);
+    }
 
     async loadCompany() {
       const user = this.auth.currentUser;
       if (!user) return;
-      const snap = await getDoc(
-        doc(this.firestore, 'users', user.uid));
-        this.companyId.set(snap.data()?.['companyId'] ?? null);
-      }
+      const snap = await getDoc(doc(this.firestore, 'users', user.uid));
+      this.companyId.set(snap.data()?.['companyId'] ?? null);
+    }
+
+
+
+
+      // async loadCompany() {
+    //   const user = this.auth.currentUser;
+    //   if (!user) return;
+    //   const snap = await getDoc(
+    //     doc(this.firestore, 'users', user.uid));
+    //     this.companyId.set(snap.data()?.['companyId'] ?? null);
+    //   }
 
   private productCollection() {
     const companyId = this.companyId();
@@ -85,6 +120,13 @@ export class ProductService {
     }
     return doc( this.firestore, `companies/${companyId}/products/${productId}` );
   }
+
+
+async addProduct(product: Product) {
+  const productRef = this.productCollection();
+  const docRef = await addDoc(productRef, product);
+  return { ...product, id: docRef.id };
+}
 
 
   updateFeatures(productId: string, features: Feature[]) {
@@ -168,12 +210,6 @@ const productRef = this.productDoc(productId);
 //   }
 
 
-async addProduct(product: Product) {
-  const productRef = this.productCollection();
-  const docRef = await addDoc(productRef, product);
-  return { ...product, id: docRef.id };
-}
-
 
   // async updateVariantStock(
   //     productId:string,
@@ -200,11 +236,19 @@ async addProduct(product: Product) {
   //   >;
   // }
 
-  getProduct(): Observable<Product[]> {
-    const productRef = this.productCollection();
-    return collectionData(productRef, { idField: 'id' }) as Observable<Product[]>;
-  }
+  // getProduct(): Observable<Product[]> {
+  //   const productRef = this.productCollection();
+  //   return collectionData(productRef, { idField: 'id' }) as Observable<Product[]>;
+  // }
 
+  getProduct(): Observable<Product[]> {
+      const companyId = this.companyId();
+      if (!companyId) { return of([]);
+        // no tiene inventario aún
+        }
+
+      const productRef = collection( this.firestore, `companies/${companyId}/products` );
+      return collectionData(productRef, { idField: 'id' }) as Observable<Product[]>; }
 
   deletedProducts(product: Product) {
     // const productDocRef = doc(this.firestore, `product/${product.id}`);
