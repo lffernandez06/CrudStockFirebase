@@ -14,7 +14,7 @@ import {
 } from '@angular/fire/firestore';
 import { Feature, Product, Variant} from '../interfaces/product.interfaces';
 import { BehaviorSubject, filter, Observable, of } from 'rxjs';
-import { authState, createUserWithEmailAndPassword } from '@angular/fire/auth';
+import { authState, createUserWithEmailAndPassword, idToken } from '@angular/fire/auth';
 import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { Auth } from '@angular/fire/auth';
 
@@ -27,6 +27,7 @@ export class ProductService {
 
   user = signal('');
   private companyId = signal<string | null>(null);
+  companyNameServer = signal<string >('');
 
   constructor(private firestore: Firestore, private auth: Auth) {}
 
@@ -74,19 +75,40 @@ export class ProductService {
     }
 
 
-    async createCompany(name: string) {
+
+    async createCompany(name: string, inventoryName: string) {
       const user = this.auth.currentUser;
       if (!user) return;
-      
-      const companyRef = await addDoc( 
+
+      const companyRef = await addDoc(
         collection(this.firestore, 'companies'),
-      { 
-        name: name || 'Mi inventario', 
-        ownerId: user.uid 
+      {
+        name: name || '',
+        inventoryName: inventoryName || '',
+        ownerId: user.uid
       } );
 
       await updateDoc(doc(this.firestore, 'users', user.uid), { companyId: companyRef.id, role: 'admin' });
       this.companyId.set(companyRef.id);
+    }
+
+
+    async consultCompanyfeatures() {
+      await this.loadCompany();
+      const companyId = this.companyId();
+      if (!companyId) {
+        throw new Error('No hay companyId cargado');
+      }
+      const snap = await getDoc(doc(this.firestore, 'companies', companyId));
+      console.log('Company features data:', companyId, snap.data());
+      if (snap.exists()) {
+        this.companyNameServer.set(snap.data()?.['name'] );
+
+      }else{
+        throw new Error('No se encontró la empresa con el ID proporcionado');
+      }
+
+      return snap.data();
     }
 
     async loadCompany() {

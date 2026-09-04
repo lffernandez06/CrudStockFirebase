@@ -213,7 +213,9 @@
 
           <!-- Form -->
 
-          <div class="mt-10 space-y-7">
+          <form [formGroup]="myFormCreateInventory">
+
+            <div class="mt-10 space-y-7">
 
 
             <!-- Company name -->
@@ -236,6 +238,7 @@
 
 
                 <input
+                  formControlName="name"
                   id="company-name"
                   type="text"
                   placeholder="Enter your company name"
@@ -273,6 +276,7 @@
 
 
                 <input
+                formControlName="inventoryName"
                   id="inventory-name"
                   type="text"
                   placeholder="e.g. Main inventory"
@@ -325,6 +329,7 @@
             <!-- CTA -->
 
             <button
+              (click)="formT() ; setInventoryFeatures(myFormCreateInventory.value.name, myFormCreateInventory.value.inventoryName)  "
               type="button"
               class="btn btn-primary h-14 min-h-14 w-full rounded-xl text-base font-semibold shadow-lg shadow-primary/20"
             >
@@ -337,6 +342,9 @@
 
 
           </div>
+
+
+          </form>
 
 
 
@@ -360,7 +368,10 @@
   ></i>
 
   <span>Back</span>
-</button>
+        </button>
+
+
+
           </div>
 
 
@@ -368,7 +379,13 @@
 
       </section>
 
+
     </div>
+
+    <div>
+          <h2>{{myFormCreateInventory.value.name | json}}</h2>
+          <h2>{{myFormCreateInventory.value.inventoryName | json}}</h2>
+        </div>
 
   </div>
 

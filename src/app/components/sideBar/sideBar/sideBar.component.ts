@@ -1,7 +1,9 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  OnInit,
   output,
+  Signal,
   signal,
 } from '@angular/core';
 import { Product } from '../../../interfaces/product.interfaces';
@@ -14,8 +16,11 @@ import { ProductService } from '../../../services/product.service';
   templateUrl: './sideBar.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SideBarComponent {
-  constructor(private productService: ProductService) {}
+export class SideBarComponent implements OnInit {
+  constructor(private productService: ProductService) {
+    this.companyName = this.productService.companyNameServer;
+
+  }
 
   cardList = signal<Product[]>([]);
   name = signal<string>('');
@@ -24,6 +29,11 @@ export class SideBarComponent {
   newProduct = output<Product>();
   image = signal<string>('');
   description = signal<string>('');
+  companyName!: Signal<string>;
+
+  async ngOnInit() {
+  await this.productService.consultCompanyfeatures();
+}
 
   addCard() {
     if (!this.name() || this.price() < 0 || this.quantity() < 0) {
@@ -42,6 +52,8 @@ export class SideBarComponent {
     this.newProduct.emit(newProduct);
     this.resetForm()
   }
+
+
 
   resetForm() {
   this.name.set('');

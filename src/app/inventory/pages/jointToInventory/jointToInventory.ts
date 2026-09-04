@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ProductService } from '../../../services/product.service';
 
 @Component({
   selector: 'joint-to-inventory',
@@ -15,6 +16,7 @@ export class JointToInventory {
 
 
   constructor(
+    private productService: ProductService,
     private router: Router
   ) {}
 
